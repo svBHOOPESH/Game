@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Arcade Hub 2026 — Full Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#04060f;--card:#0b1120;--card2:#0e1829;
+--neon:#00f5ff;--neon2:#7b5fff;--neon3:#ff6fd8;
+--poki:#ffde00;--crazy:#eb4034;--friv:#b0fb30;
+--purple:#a855f7;--blue:#4285f4;--pink:#ff007f;
+--orange:#ffa040;--teal:#00bcd4;--gold:#f5a623;
+--green:#22c55e;--rose:#f43f5e;--indigo:#6366f1;
+--amber:#f59e0b;--sky:#38bdf8;--lime:#84cc16;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:#e2e8f0;font-family:'Rajdhani',sans-serif;padding:20px;text-align:center;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+background-image:radial-gradient(ellipse at 20% 20%,rgba(123,95,255,0.08) 0,transparent 50%),
+radial-gradient(ellipse at 80% 80%,rgba(0,245,255,0.06) 0,transparent 50%),
+linear-gradient(rgba(0,245,255,0.018) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,245,255,0.018) 1px,transparent 1px);
+background-size:auto,auto,44px 44px,44px 44px;pointer-events:none}
+.container{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+h1{font-family:'Orbitron',sans-serif;font-size:2.8rem;letter-spacing:3px;margin-bottom:6px;
+background:linear-gradient(90deg,var(--neon),var(--neon2),var(--neon3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{color:#64748b;margin-bottom:8px;font-size:1rem}
+.hub-stats{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin:20px 0 10px}
+.hub-stat{font-family:'Orbitron',sans-serif;font-size:0.68rem;letter-spacing:2px;color:#94a3b8;display:flex;align-items:center;gap:6px}
+.hub-stat span{color:var(--neon);font-size:0.9rem;font-weight:700}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:28px 0 16px}
+.filter-btn{font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:1.5px;padding:7px 16px;border-radius:20px;
+border:1px solid #1e293b;background:var(--card);color:#64748b;cursor:pointer;transition:all 0.25s}
+.filter-btn:hover,.filter-btn.active{border-color:var(--neon);color:var(--neon);background:rgba(0,245,255,0.07)}
+.section-header{margin:44px 0 20px;font-family:'Orbitron',sans-serif;font-size:1rem;text-align:left;
+border-bottom:1px solid #1a2540;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+.sh-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.platform-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-bottom:30px}
+.platform-card{background:var(--card);border:1px solid #1a2540;border-radius:16px;padding:22px;text-decoration:none;
+color:white;transition:all 0.3s ease;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.platform-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity 0.3s;border-radius:16px 16px 0 0}
+.platform-card:hover::before{opacity:1}
+.platform-card:hover{transform:translateY(-7px);box-shadow:0 16px 48px rgba(0,0,0,0.7);background:var(--card2)}
+.platform-card.poki::before{background:var(--poki)}
+.platform-card.crazy::before{background:var(--crazy)}
+.platform-card.friv::before{background:var(--friv)}
+.platform-card.classic::before{background:var(--purple)}
+.platform-card.google::before{background:var(--blue)}
+.platform-card.shared::before{background:var(--pink)}
+.platform-card.miniclip::before{background:var(--orange)}
+.platform-card.kongregate::before{background:var(--teal)}
+.platform-card.newgrounds::before{background:var(--gold)}
+.platform-card.offline-snake::before{background:var(--green)}
+.platform-card.offline-tetris::before{background:var(--neon2)}
+.platform-card.offline-mem::before{background:var(--rose)}
+.platform-card.offline-flappy::before{background:var(--amber)}
+.platform-card.offline-mole::before{background:var(--indigo)}
+.platform-card.offline-breakout::before{background:var(--sky)}
+.platform-card.offline-typing::before{background:var(--lime)}
+.platform-card.offline-color::before{background:var(--neon3)}
+.platform-card.offline-math::before{background:var(--gold)}
+.platform-card.offline-rock::before{background:var(--orange)}
+.platform-card.offline-2048::before{background:var(--amber)}
+.platform-card.offline-maze::before{background:var(--teal)}
+
+.platform-card.poki:hover{border-color:var(--poki)}
+.platform-card.crazy:hover{border-color:var(--crazy)}
+.platform-card.friv:hover{border-color:var(--friv)}
+.platform-card.classic:hover{border-color:var(--purple)}
+.platform-card.google:hover{border-color:var(--blue)}
+.platform-card.shared:hover{border-color:var(--pink)}
+.platform-card.miniclip:hover{border-color:var(--orange)}
+.platform-card.kongregate:hover{border-color:var(--teal)}
+.platform-card.newgrounds:hover{border-color:var(--gold)}
+.platform-card.offline-snake:hover{border-color:var(--green)}
+.platform-card.offline-tetris:hover{border-color:var(--neon2)}
+.platform-card.offline-mem:hover{border-color:var(--rose)}
+.platform-card.offline-flappy:hover{border-color:var(--amber)}
+.platform-card.offline-mole:hover{border-color:var(--indigo)}
+.platform-card.offline-breakout:hover{border-color:var(--sky)}
+.platform-card.offline-typing:hover{border-color:var(--lime)}
+.platform-card.offline-color:hover{border-color:var(--neon3)}
+.platform-card.offline-math:hover{border-color:var(--gold)}
+.platform-card.offline-rock:hover{border-color:var(--orange)}
+.platform-card.offline-2048:hover{border-color:var(--amber)}
+.platform-card.offline-maze:hover{border-color:var(--teal)}
+
+.logo-box{font-size:2.4rem;margin-bottom:10px}
+.platform-card h2{font-family:'Orbitron',sans-serif;font-size:0.88rem;margin:0 0 8px;letter-spacing:1px}
+.platform-card p{font-size:0.86rem;color:#94a3b8;margin:0;line-height:1.5}
+.platform-badge{display:inline-block;font-size:0.6rem;letter-spacing:1.5px;text-transform:uppercase;
+font-family:'Orbitron',sans-serif;padding:3px 8px;border-radius:4px;margin-bottom:10px}
+.badge-offline{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+.badge-web{background:rgba(66,133,244,0.15);color:#7eb3ff;border:1px solid rgba(66,133,244,0.3)}
+.badge-free{background:rgba(0,245,255,0.1);color:var(--neon);border:1px solid rgba(0,245,255,0.3)}
+.btn{display:inline-block;margin-top:auto;padding:9px 20px;border-radius:8px;font-weight:bold;
+text-transform:uppercase;font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:1px;
+transition:opacity 0.2s,transform 0.2s;text-align:center;cursor:pointer}
+.btn:hover{opacity:0.85;transform:scale(1.02)}
+.poki .btn{background:var(--poki);color:#000}
+.crazy .btn{background:var(--crazy);color:#fff}
+.friv .btn{background:var(--friv);color:#000}
+.classic .btn,.offline-mem .btn,.offline-color .btn{background:var(--purple);color:#fff}
+.google .btn{background:var(--blue);color:#fff}
+.shared .btn{background:var(--pink);color:#fff}
+.miniclip .btn{background:var(--orange);color:#000}
+.kongregate .btn{background:var(--teal);color:#000}
+.newgrounds .btn{background:var(--gold);color:#000}
+.offline-snake .btn{background:var(--green);color:#000}
+.offline-tetris .btn{background:var(--neon2);color:#fff}
+.offline-flappy .btn{background:var(--amber);color:#000}
+.offline-mole .btn{background:var(--indigo);color:#fff}
+.offline-breakout .btn{background:var(--sky);color:#000}
+.offline-typing .btn{background:var(--lime);color:#000}
+.offline-math .btn{background:var(--gold);color:#000}
+.offline-rock .btn{background:var(--orange);color:#000}
+.offline-2048 .btn{background:var(--amber);color:#000}
+.offline-maze .btn{background:var(--teal);color:#000}
+.game-list{text-align:left;margin:12px 0 16px;font-size:0.82rem;color:#94a3b8;list-style:none;padding:0;flex:1}
+.game-list li{margin-bottom:4px;padding-left:18px;position:relative}
+.game-list li::before{content:"▸";position:absolute;left:0;color:#334155}
+.play-inline-btn{display:block;width:100%;margin-top:10px;padding:9px;
+background:rgba(0,245,255,0.06);border:1px dashed rgba(0,245,255,0.25);
+border-radius:6px;color:var(--neon);font-size:0.7rem;font-family:'Orbitron',sans-serif;
+letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background 0.3s}
+.play-inline-btn:hover{background:rgba(0,245,255,0.14)}
+
+/* MODAL */
+.game-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.92);
+backdrop-filter:blur(10px);align-items:center;justify-content:center;flex-direction:column}
+.game-modal.active{display:flex}
+.modal-header{width:94vw;max-width:980px;display:flex;align-items:center;justify-content:space-between;
+padding:0 0 12px;color:var(--neon);font-family:'Orbitron',sans-serif;font-size:0.85rem;letter-spacing:2px}
+.modal-close{background:#1e293b;border:1px solid #334155;color:#fff;
+padding:7px 18px;border-radius:6px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:0.72rem;letter-spacing:1px}
+.modal-close:hover{background:#eb4034}
+.modal-iframe{width:94vw;max-width:980px;height:72vh;border:2px solid rgba(0,245,255,0.3);border-radius:14px;background:#000}
+.modal-note{margin-top:10px;font-size:0.76rem;color:#64748b;max-width:980px;width:94vw}
+
+/* INLINE GAME PANELS */
+.inline-game-panel{display:none;margin-top:14px;border-radius:10px;overflow:hidden;
+border:1px solid rgba(0,245,255,0.2);background:#000;width:100%}
+.inline-game-panel.open{display:block}
+.inline-game-panel canvas{display:block;margin:0 auto;image-rendering:pixelated}
+.game-controls{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:8px;background:#050810}
+.gc-btn{font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:1px;padding:5px 12px;
+border-radius:6px;border:1px solid #334155;background:#0f172a;color:#94a3b8;cursor:pointer;transition:all 0.2s}
+.gc-btn:hover{border-color:var(--neon);color:var(--neon)}
+.game-score{font-family:'Orbitron',sans-serif;font-size:0.75rem;color:var(--neon);text-align:center;padding:6px 8px;background:#050810}
+
+footer{margin-top:60px;padding:20px;border-top:1px solid #1a2540;font-size:0.78rem;color:#64748b}
+@media(max-width:600px){h1{font-size:1.7rem}.platform-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="game-modal" id="gameModal">
+<div class="modal-header">
+<span id="modalTitle">Loading Game...</span>
+<button class="modal-close" onclick="closeModal()">✕ Close</button>
+</div>
+<iframe class="modal-iframe" id="modalFrame" src="" allowfullscreen></iframe>
+<div class="modal-note" id="modalNote">If the game doesn't load, try the direct link below.</div>
+<a id="modalFallback" href="#" target="_blank" style="color:var(--neon);margin-top:6px;font-size:0.78rem;font-family:'Orbitron',sans-serif;letter-spacing:1px;">↗ Open in New Tab</a>
+</div>
+
+<div class="container">
+<h1>WEB ARCADE HUB</h1>
+<p class="subtitle">Instant-play browser games · No downloads · Works offline too</p>
+<div class="hub-stats">
+<div class="hub-stat"><span>7</span> CATEGORIES</div>
+<div class="hub-stat"><span>12</span> OFFLINE GAMES</div>
+<div class="hub-stat"><span>30+</span> TOTAL GAMES</div>
+<div class="hub-stat"><span>100%</span> BROWSER NATIVE</div>
+<div class="hub-stat"><span>🟢</span> LIVE</div>
+</div>
+
+<div class="filter-bar">
+<button class="filter-btn active" onclick="filterCards('all',this)">ALL GAMES</button>
+<button class="filter-btn" onclick="filterCards('offline',this)">⚡ OFFLINE ONLY</button>
+<button class="filter-btn" onclick="filterCards('puzzle',this)">🧩 PUZZLE</button>
+<button class="filter-btn" onclick="filterCards('arcade',this)">🕹️ ARCADE</button>
+<button class="filter-btn" onclick="filterCards('word',this)">📝 WORD/MIND</button>
+<button class="filter-btn" onclick="filterCards('portal',this)">🌐 PORTALS</button>
+</div>
+
+<!-- OFFLINE GAMES -->
+<div class="section-header" style="color:var(--green)">
+<div class="sh-dot" style="background:var(--green)"></div>
+# OFFLINE GAMES — FULLY PLAYABLE (NO INTERNET NEEDED)
+</div>
+<div class="platform-grid">
+
+<!-- SNAKE -->
+<div class="platform-card offline-snake" data-tags="offline arcade" id="card-snake">
+<div class="logo-box">🐍</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>SNAKE</h2>
+<p>Classic snake — eat, grow, don't crash. Arrow keys or WASD.</p>
+<ul class="game-list">
+<li>Arrow keys / WASD</li>
+<li>Speed increases over time</li>
+<li>High score tracking</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('snake')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-snake">
+<div class="game-score" id="score-snake">SCORE: 0 &nbsp;|&nbsp; HIGH: 0</div>
+<canvas id="canvas-snake" width="300" height="300" style="background:#030a14"></canvas>
+<div class="game-controls">
+<button class="gc-btn" onclick="startSnake()">NEW GAME</button>
+<button class="gc-btn" onclick="pauseSnake()">PAUSE</button>
+<div style="display:grid;grid-template-columns:repeat(3,36px);gap:4px;margin:0 8px">
+<div></div><button class="gc-btn" style="padding:4px" onclick="snakeDir(0,-1)">▲</button><div></div>
+<button class="gc-btn" style="padding:4px" onclick="snakeDir(-1,0)">◄</button>
+<div></div>
+<button class="gc-btn" style="padding:4px" onclick="snakeDir(1,0)">►</button>
+<div></div><button class="gc-btn" style="padding:4px" onclick="snakeDir(0,1)">▼</button><div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TETRIS -->
+<div class="platform-card offline-tetris" data-tags="offline arcade puzzle" id="card-tetris">
+<div class="logo-box">🟦</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>TETRIS</h2>
+<p>Stack and clear lines in this full-featured Tetris clone.</p>
+<ul class="game-list">
+<li>All 7 tetrominoes</li>
+<li>Left/Right/Down/Up(rotate)</li>
+<li>Level & score system</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('tetris')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-tetris">
+<div class="game-score" id="score-tetris">SCORE: 0 &nbsp;|&nbsp; LEVEL: 1 &nbsp;|&nbsp; LINES: 0</div>
+<div style="display:flex;justify-content:center;gap:10px;padding:4px;background:#000">
+<canvas id="canvas-tetris" width="200" height="400" style="background:#030a14"></canvas>
+<canvas id="canvas-next" width="80" height="80" style="background:#0b1120;border-radius:6px;border:1px solid #1e293b;align-self:flex-start;margin-top:4px"></canvas>
+</div>
+<div class="game-controls">
+<button class="gc-btn" onclick="startTetris()">NEW GAME</button>
+<button class="gc-btn" onclick="pauseTetris()">PAUSE</button>
+<div style="display:grid;grid-template-columns:repeat(3,36px);gap:4px;margin:0 8px">
+<div></div><button class="gc-btn" style="padding:4px" onclick="tetrisKey('up')">↻</button><div></div>
+<button class="gc-btn" style="padding:4px" onclick="tetrisKey('left')">◄</button>
+<button class="gc-btn" style="padding:4px" onclick="tetrisKey('down')">▼</button>
+<button class="gc-btn" style="padding:4px" onclick="tetrisKey('right')">►</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MEMORY MATCH -->
+<div class="platform-card offline-mem" data-tags="offline puzzle" id="card-mem">
+<div class="logo-box">🃏</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>MEMORY MATCH</h2>
+<p>Flip and match emoji pairs. Train your visual memory!</p>
+<ul class="game-list">
+<li>4×4 grid (16 cards)</li>
+<li>Move counter</li>
+<li>Win celebration</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('mem')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-mem">
+<div class="game-score" id="score-mem">MOVES: 0 &nbsp;|&nbsp; PAIRS: 0/8</div>
+<div id="mem-board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px;background:#050810;max-width:300px;margin:0 auto"></div>
+<div class="game-controls"><button class="gc-btn" onclick="startMem()">NEW GAME</button></div>
+</div>
+</div>
+
+<!-- BREAKOUT -->
+<div class="platform-card offline-breakout" data-tags="offline arcade" id="card-breakout">
+<div class="logo-box">🏓</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>BREAKOUT</h2>
+<p>Classic brick-breaking action. Move mouse or use A/D keys.</p>
+<ul class="game-list">
+<li>Mouse / A-D keys</li>
+<li>Multiple brick rows</li>
+<li>Lives & score</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('breakout')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-breakout">
+<div class="game-score" id="score-breakout">SCORE: 0 &nbsp;|&nbsp; LIVES: 3</div>
+<canvas id="canvas-breakout" width="320" height="300" style="background:#030a14;cursor:none"></canvas>
+<div class="game-controls">
+<button class="gc-btn" onclick="startBreakout()">NEW GAME</button>
+<span style="color:#475569;font-size:0.6rem;font-family:'Orbitron',sans-serif">MOUSE OR A/D KEYS</span>
+</div>
+</div>
+</div>
+
+<!-- FLAPPY BIRD -->
+<div class="platform-card offline-flappy" data-tags="offline arcade" id="card-flappy">
+<div class="logo-box">🐦</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>FLAPPY BIRD</h2>
+<p>Tap or press Space to keep the bird flying through pipes.</p>
+<ul class="game-list">
+<li>Space / Tap to flap</li>
+<li>Endless pipes</li>
+<li>Best score tracking</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('flappy')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-flappy">
+<div class="game-score" id="score-flappy">SCORE: 0 &nbsp;|&nbsp; BEST: 0</div>
+<canvas id="canvas-flappy" width="300" height="380" style="background:#87ceeb;cursor:pointer"></canvas>
+<div class="game-controls">
+<button class="gc-btn" onclick="flappyTap()">TAP / FLAP</button>
+<button class="gc-btn" onclick="startFlappy()">RESTART</button>
+</div>
+</div>
+</div>
+
+<!-- WHACK A MOLE -->
+<div class="platform-card offline-mole" data-tags="offline arcade" id="card-mole">
+<div class="logo-box">🔨</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>WHACK-A-MOLE</h2>
+<p>Smash moles before they vanish. Reflexes required!</p>
+<ul class="game-list">
+<li>30-second rounds</li>
+<li>Speed increases</li>
+<li>Combo scoring</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('mole')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-mole">
+<div class="game-score" id="score-mole">SCORE: 0 &nbsp;|&nbsp; TIME: 30</div>
+<div id="mole-board" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px;background:#050810;max-width:280px;margin:0 auto"></div>
+<div class="game-controls"><button class="gc-btn" onclick="startMole()">START GAME</button></div>
+</div>
+</div>
+
+<!-- TYPING SPEED -->
+<div class="platform-card offline-typing" data-tags="offline word" id="card-typing">
+<div class="logo-box">⌨️</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>TYPING SPEED</h2>
+<p>Race to type a sentence. Measures your WPM and accuracy.</p>
+<ul class="game-list">
+<li>Random sentences</li>
+<li>WPM & accuracy</li>
+<li>Progress highlight</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('typing')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-typing">
+<div style="padding:14px;background:#050810">
+<div id="typing-text" style="font-size:1rem;line-height:1.9;text-align:left;padding:12px;background:#0b1120;border-radius:8px;margin-bottom:10px;min-height:50px;letter-spacing:0.5px"></div>
+<input id="typing-input" type="text" placeholder="Start typing here..." style="width:100%;padding:10px 14px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-family:'Rajdhani',sans-serif;font-size:1rem;outline:none" oninput="checkTyping()">
+<div class="game-score" id="score-typing" style="margin-top:6px">WPM: — &nbsp;|&nbsp; ACCURACY: —%</div>
+<div class="game-controls"><button class="gc-btn" onclick="startTyping()">NEW SENTENCE</button></div>
+</div>
+</div>
+</div>
+
+<!-- COLOR GUESS -->
+<div class="platform-card offline-color" data-tags="offline puzzle word" id="card-color">
+<div class="logo-box">🎨</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>COLOR GUESS</h2>
+<p>Guess the RGB hex colour from 3 swatches. Test your eye!</p>
+<ul class="game-list">
+<li>3 colour choices</li>
+<li>10 rounds</li>
+<li>Score & streak</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('color')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-color">
+<div style="padding:14px;background:#050810">
+<div id="color-hex" style="font-family:'Orbitron',sans-serif;font-size:1.6rem;letter-spacing:4px;color:var(--neon);text-align:center;padding:16px;background:#0b1120;border-radius:10px;margin-bottom:14px">——</div>
+<div id="color-choices" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px"></div>
+<div class="game-score" id="score-color">SCORE: 0/10 &nbsp;|&nbsp; STREAK: 0</div>
+<div class="game-controls"><button class="gc-btn" onclick="startColor()">NEW GAME</button></div>
+</div>
+</div>
+</div>
+
+<!-- MATH BLITZ -->
+<div class="platform-card offline-math" data-tags="offline puzzle word" id="card-math">
+<div class="logo-box">🔢</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>MATH BLITZ</h2>
+<p>Answer maths questions as fast as you can in 60 seconds!</p>
+<ul class="game-list">
+<li>+, −, ×, ÷ operators</li>
+<li>60-second timer</li>
+<li>Adaptive difficulty</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('math')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-math">
+<div style="padding:14px;background:#050810">
+<div id="math-question" style="font-family:'Orbitron',sans-serif;font-size:2rem;color:var(--gold);text-align:center;padding:18px;background:#0b1120;border-radius:10px;margin-bottom:12px">Press Start!</div>
+<input id="math-input" type="number" placeholder="Answer..." style="width:100%;padding:10px 14px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-family:'Orbitron',sans-serif;font-size:1.2rem;outline:none;text-align:center" onkeydown="if(event.key==='Enter')checkMath()">
+<div class="game-score" id="score-math" style="margin-top:8px">SCORE: 0 &nbsp;|&nbsp; TIME: 60</div>
+<div class="game-controls">
+<button class="gc-btn" onclick="startMath()">START</button>
+<button class="gc-btn" onclick="checkMath()">SUBMIT</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ROCK PAPER SCISSORS -->
+<div class="platform-card offline-rock" data-tags="offline puzzle" id="card-rock">
+<div class="logo-box">✊</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>ROCK PAPER SCISSORS</h2>
+<p>Best of 5 against the CPU. Can you beat the machine?</p>
+<ul class="game-list">
+<li>Best of 5 rounds</li>
+<li>Win/lose streak</li>
+<li>CPU reaction emojis</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('rock')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-rock">
+<div style="padding:14px;background:#050810">
+<div id="rock-display" style="font-size:3rem;text-align:center;padding:16px;min-height:80px">✊ vs ❓</div>
+<div id="rock-result" style="font-family:'Orbitron',sans-serif;font-size:0.85rem;color:var(--neon);text-align:center;min-height:24px;margin-bottom:10px"></div>
+<div style="display:flex;gap:10px;justify-content:center">
+<button class="gc-btn" style="font-size:1.6rem;padding:10px 16px;border-radius:12px" onclick="playRock('rock')">✊</button>
+<button class="gc-btn" style="font-size:1.6rem;padding:10px 16px;border-radius:12px" onclick="playRock('paper')">🖐</button>
+<button class="gc-btn" style="font-size:1.6rem;padding:10px 16px;border-radius:12px" onclick="playRock('scissors')">✌️</button>
+</div>
+<div class="game-score" id="score-rock" style="margin-top:10px">YOU: 0 &nbsp;|&nbsp; CPU: 0 &nbsp;|&nbsp; ROUND 1/5</div>
+<div class="game-controls"><button class="gc-btn" onclick="startRock()">RESET</button></div>
+</div>
+</div>
+</div>
+
+<!-- 2048 MINI -->
+<div class="platform-card offline-2048" data-tags="offline puzzle" id="card-2048">
+<div class="logo-box">🔷</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>2048</h2>
+<p>Swipe or use arrow keys to merge tiles and reach 2048!</p>
+<ul class="game-list">
+<li>Arrow keys / swipe</li>
+<li>Merge tiles</li>
+<li>Best score saved</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('2048')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-2048">
+<div class="game-score" id="score-2048">SCORE: 0 &nbsp;|&nbsp; BEST: 0</div>
+<canvas id="canvas-2048" width="280" height="280" style="background:#0b0f1a;margin:8px auto;display:block;border-radius:8px"></canvas>
+<div class="game-controls">
+<button class="gc-btn" onclick="start2048()">NEW GAME</button>
+<div style="display:grid;grid-template-columns:repeat(3,36px);gap:4px;margin:0 8px">
+<div></div><button class="gc-btn" style="padding:4px" onclick="move2048('up')">▲</button><div></div>
+<button class="gc-btn" style="padding:4px" onclick="move2048('left')">◄</button>
+<button class="gc-btn" style="padding:4px" onclick="move2048('down')">▼</button>
+<button class="gc-btn" style="padding:4px" onclick="move2048('right')">►</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MAZE -->
+<div class="platform-card offline-maze" data-tags="offline puzzle arcade" id="card-maze">
+<div class="logo-box">🌀</div>
+<div class="platform-badge badge-offline">Offline</div>
+<h2>MAZE RUNNER</h2>
+<p>Navigate the maze from start to finish with arrow keys.</p>
+<ul class="game-list">
+<li>Arrow keys to move</li>
+<li>Generated mazes</li>
+<li>Timer challenge</li>
+</ul>
+<button class="play-inline-btn" onclick="toggleGame('maze')">▶ Play Inline</button>
+<div class="inline-game-panel" id="panel-maze">
+<div class="game-score" id="score-maze">TIME: 0s &nbsp;|&nbsp; BEST: —</div>
+<canvas id="canvas-maze" width="300" height="300" style="background:#030a14;display:block;margin:0 auto"></canvas>
+<div class="game-controls">
+<button class="gc-btn" onclick="startMaze()">NEW MAZE</button>
+<div style="display:grid;grid-template-columns:repeat(3,36px);gap:4px;margin:0 8px">
+<div></div><button class="gc-btn" style="padding:4px" onclick="moveMaze(0,-1)">▲</button><div></div>
+<button class="gc-btn" style="padding:4px" onclick="moveMaze(-1,0)">◄</button>
+<div></div>
+<button class="gc-btn" style="padding:4px" onclick="moveMaze(1,0)">►</button>
+<div></div><button class="gc-btn" style="padding:4px" onclick="moveMaze(0,1)">▼</button><div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- GOOGLE ARCADE -->
+<div class="section-header" style="color:var(--blue)">
+<div class="sh-dot" style="background:var(--blue)"></div>
+# GOOGLE ARCADE (BUILT-IN)
+</div>
+<div class="platform-grid">
+<div class="platform-card google" data-tags="portal arcade" onclick="openModal('PAC-MAN','https://www.google.com/logos/2010/pacman10-i.html','https://www.google.com/logos/2010/pacman10-i.html')">
+<div class="logo-box">👻</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>PAC-MAN</h2>
+<p>The legendary Google Doodle — playable in browser instantly.</p>
+<ul class="game-list"><li>Original Arcade Feel</li><li>Ad-Free Experience</li></ul>
+<button class="play-inline-btn">▶ Play Inline</button>
+<a href="https://www.google.com/logos/2010/pacman10-i.html" target="_blank" class="btn" style="margin-top:10px">Full Screen</a>
+</div>
+<a href="https://www.google.com/search?q=play+snake" target="_blank" class="platform-card google" data-tags="portal arcade">
+<div class="logo-box">🐍</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>GOOGLE SNAKE</h2>
+<p>Google's built-in Snake game in Search results.</p>
+<ul class="game-list"><li>Instant in Search</li><li>Mobile Friendly</li></ul>
+<div class="btn">Play Snake</div>
+</a>
+<a href="https://www.google.com/search?q=play+tic+tac+toe" target="_blank" class="platform-card google" data-tags="portal puzzle word">
+<div class="logo-box">❌</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>TIC TAC TOE</h2>
+<p>Play vs AI or a friend, right in Search results.</p>
+<ul class="game-list"><li>3 AI Difficulties</li><li>Instant Play</li></ul>
+<div class="btn">Play Now</div>
+</a>
+<a href="https://www.google.com/search?q=play+solitaire" target="_blank" class="platform-card google" data-tags="portal puzzle">
+<div class="logo-box">🂡</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>SOLITAIRE</h2>
+<p>Google's built-in Klondike Solitaire with smooth animations.</p>
+<ul class="game-list"><li>Classic Klondike</li><li>Undo & hints</li></ul>
+<div class="btn">Play Now</div>
+</a>
+<a href="https://www.google.com/search?q=play+minesweeper" target="_blank" class="platform-card google" data-tags="portal puzzle">
+<div class="logo-box">💣</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>MINESWEEPER</h2>
+<p>Classic mine-sweeping right inside Google Search.</p>
+<ul class="game-list"><li>Easy/Medium/Hard</li><li>Safe first click</li></ul>
+<div class="btn">Play Now</div>
+</a>
+</div>
+
+<!-- WEB PORTALS -->
+<div class="section-header" style="color:var(--orange)">
+<div class="sh-dot" style="background:var(--orange)"></div>
+# WEB GAME PORTALS
+</div>
+<div class="platform-grid">
+<a href="https://poki.com" target="_blank" class="platform-card poki" data-tags="portal arcade puzzle">
+<div class="logo-box">🟡</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>POKI</h2>
+<p>Biggest browser game platform. Subway Surfers, Stickman, and more.</p>
+<div class="btn">Play on Poki</div>
+</a>
+<a href="https://www.crazygames.com" target="_blank" class="platform-card crazy" data-tags="portal arcade">
+<div class="logo-box">🎲</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>CRAZY GAMES</h2>
+<p>Massive free platform — shooters, racing, and .io games.</p>
+<div class="btn">Play Now</div>
+</a>
+<a href="https://www.miniclip.com" target="_blank" class="platform-card miniclip" data-tags="portal arcade">
+<div class="logo-box">🔴</div>
+<div class="platform-badge badge-web">Web</div>
+<h2>MINICLIP</h2>
+<p>The OG portal. 8 Ball Pool and classic arcade hits.</p>
+<div class="btn">Play on Miniclip</div>
+</a>
+</div>
+
+<!-- CLEAN CLASSICS -->
+<div class="section-header" style="color:var(--purple)">
+<div class="sh-dot" style="background:var(--purple)"></div>
+# CLEAN CLASSICS (AD-FREE)
+</div>
+<div class="platform-grid">
+<a href="https://lichess.org/training" target="_blank" class="platform-card classic" data-tags="portal puzzle word">
+<div class="logo-box">♟️</div>
+<div class="platform-badge badge-free">Free</div>
+<h2>CHESS – LICHESS</h2>
+<p>Completely free, open source, no ads. Puzzles & play.</p>
+<div class="btn">Play Chess</div>
+</a>
+<a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" class="platform-card classic" data-tags="portal word puzzle">
+<div class="logo-box">🟩</div>
+<div class="platform-badge badge-free">Free</div>
+<h2>WORDLE</h2>
+<p>The viral daily word game by NYT. One word per day.</p>
+<div class="btn">Play Wordle</div>
+</a>
+<a href="https://www.nytimes.com/puzzles/spelling-bee" target="_blank" class="platform-card classic" data-tags="portal word">
+<div class="logo-box">🐝</div>
+<div class="platform-badge badge-free">Free</div>
+<h2>SPELLING BEE</h2>
+<p>Make words from 7 letters. Reach Genius status!</p>
+<div class="btn">Play Now</div>
+</a>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+<strong style="color:#94a3b8">WEB ARCADE HUB 2026</strong> — Full Edition · All games are browser-based · ⚡ Offline games need no internet
+</footer>
+
+<script>
+/* ===== MODAL ===== */
+function openModal(title,src,fallback){
+document.getElementById('modalTitle').textContent=title;
+document.getElementById('modalFrame').src=src;
+document.getElementById('modalFallback').href=fallback;
+document.getElementById('gameModal').classList.add('active');
+document.body.style.overflow='hidden';
+}
+function closeModal(){
+document.getElementById('gameModal').classList.remove('active');
+document.getElementById('modalFrame').src='';
+document.body.style.overflow='';
+}
+document.getElementById('gameModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+
+/* ===== FILTER ===== */
+function filterCards(tag,btn){
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+document.querySelectorAll('.platform-card').forEach(c=>{
+const tags=(c.dataset.tags||'');
+c.style.display=(tag==='all'||tags.includes(tag))?'':'none';
+});
+document.querySelectorAll('.section-header').forEach(h=>h.style.display='');
+}
+
+/* ===== TOGGLE GAME PANEL ===== */
+function toggleGame(id){
+const panel=document.getElementById('panel-'+id);
+const isOpen=panel.classList.contains('open');
+document.querySelectorAll('.inline-game-panel').forEach(p=>p.classList.remove('open'));
+if(!isOpen){
+panel.classList.add('open');
+setTimeout(()=>{
+if(id==='snake')initSnake();
+else if(id==='tetris')initTetris();
+else if(id==='mem')startMem();
+else if(id==='breakout')initBreakout();
+else if(id==='flappy')initFlappy();
+else if(id==='mole')initMole();
+else if(id==='typing')startTyping();
+else if(id==='color')startColor();
+else if(id==='math')initMath();
+else if(id==='rock')startRock();
+else if(id==='2048')init2048();
+else if(id==='maze')startMaze();
+},80);
+}
+}
+
+/* ===========================
+   SNAKE
+=========================== */
+let snakeGame={running:false,paused:false,loop:null,body:[],dir:{x:1,y:0},nextDir:{x:1,y:0},food:{x:0,y:0},score:0,high:0,size:20,cols:15,rows:15};
+function initSnake(){startSnake()}
+function startSnake(){
+const g=snakeGame;clearInterval(g.loop);
+g.body=[{x:7,y:7},{x:6,y:7},{x:5,y:7}];
+g.dir={x:1,y:0};g.nextDir={x:1,y:0};g.score=0;
+placeSnakeFood();g.paused=false;g.running=true;
+g.loop=setInterval(stepSnake,140);drawSnake();
+}
+function placeSnakeFood(){
+const g=snakeGame;let pos;
+do{pos={x:Math.floor(Math.random()*g.cols),y:Math.floor(Math.random()*g.rows)}}
+while(g.body.some(b=>b.x===pos.x&&b.y===pos.y));
+g.food=pos;
+}
+function stepSnake(){
+const g=snakeGame;if(!g.running||g.paused)return;
+g.dir={...g.nextDir};
+const head={x:g.body[0].x+g.dir.x,y:g.body[0].y+g.dir.y};
+if(head.x<0||head.x>=g.cols||head.y<0||head.y>=g.rows||g.body.some(b=>b.x===head.x&&b.y===head.y)){
+g.running=false;clearInterval(g.loop);drawSnake(true);return;
+}
+g.body.unshift(head);
+if(head.x===g.food.x&&head.y===g.food.y){g.score+=10;placeSnakeFood();}
+else g.body.pop();
+if(g.score>g.high)g.high=g.score;
+document.getElementById('score-snake').textContent=`SCORE: ${g.score} | HIGH: ${g.high}`;
+drawSnake();
+}
+function drawSnake(dead=false){
+const g=snakeGame,c=document.getElementById('canvas-snake'),ctx=c.getContext('2d'),s=g.size;
+ctx.clearRect(0,0,c.width,c.height);
+ctx.fillStyle='#0a1628';
+for(let x=0;x<g.cols;x++)for(let y=0;y<g.rows;y++){if((x+y)%2===0){ctx.fillRect(x*s,y*s,s,s)}}
+ctx.fillStyle='#ff6fd8';ctx.shadowBlur=12;ctx.shadowColor='#ff6fd8';
+ctx.fillRect(g.food.x*s+3,g.food.y*s+3,s-6,s-6);ctx.shadowBlur=0;
+g.body.forEach((b,i)=>{
+ctx.fillStyle=dead?'#ef4444':i===0?'#22c55e':'#16a34a';
+if(!dead&&i===0){ctx.shadowBlur=10;ctx.shadowColor='#22c55e';}
+ctx.fillRect(b.x*s+1,b.y*s+1,s-2,s-2);ctx.shadowBlur=0;
+});
+if(dead){ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#f87171';ctx.font='bold 16px Orbitron,sans-serif';ctx.textAlign='center';
+ctx.fillText('GAME OVER',c.width/2,c.height/2-10);
+ctx.fillStyle='#94a3b8';ctx.font='12px Orbitron,sans-serif';
+ctx.fillText('Press NEW GAME',c.width/2,c.height/2+14);}
+}
+function snakeDir(x,y){const g=snakeGame;if(x!==0&&g.dir.x!==0)return;if(y!==0&&g.dir.y!==0)return;g.nextDir={x,y}}
+function pauseSnake(){const g=snakeGame;g.paused=!g.paused}
+document.addEventListener('keydown',e=>{
+const m={'ArrowLeft':[-1,0],'ArrowRight':[1,0],'ArrowUp':[0,-1],'ArrowDown':[0,1],'a':[-1,0],'d':[1,0],'w':[0,-1],'s':[0,1]};
+if(m[e.key]){e.preventDefault();snakeDir(...m[e.key]);}
+});
+
+/* ===========================
+   TETRIS
+=========================== */
+const PIECES=[
+[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],
+[[1,0],[1,0],[1,1]],[[0,1],[0,1],[1,1]],
+[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]
+];
+const PCOLORS=['#00f5ff','#ffde00','#a855f7','#f97316','#3b82f6','#ef4444','#22c55e'];
+let tet={board:null,piece:null,px:0,py:0,next:null,score:0,lines:0,level:1,loop:null,paused:false,running:false};
+function initTetris(){startTetris()}
+function startTetris(){
+clearInterval(tet.loop);
+tet.board=Array.from({length:20},()=>Array(10).fill(0));
+tet.score=0;tet.lines=0;tet.level=1;tet.paused=false;tet.running=true;
+tet.next=randPiece();spawnTetris();
+tet.loop=setInterval(tetDrop,600);drawTetris();
+}
+function randPiece(){const i=Math.floor(Math.random()*PIECES.length);return{shape:PIECES[i],color:PCOLORS[i]}}
+function spawnTetris(){
+tet.piece=tet.next;tet.next=randPiece();tet.px=3;tet.py=0;
+if(collides(tet.piece.shape,tet.px,tet.py)){tet.running=false;clearInterval(tet.loop);drawTetris(true);}
+drawNextPiece();
+}
+function collides(shape,ox,oy){
+return shape.some((row,y)=>row.some((v,x)=>v&&(oy+y>=20||ox+x<0||ox+x>=10||(tet.board[oy+y]&&tet.board[oy+y][ox+x]))));
+}
+function tetDrop(){
+if(!tet.running||tet.paused)return;
+if(!collides(tet.piece.shape,tet.px,tet.py+1)){tet.py++;}
+else{lockTetris();clearLines();spawnTetris();}
+drawTetris();
+}
+function lockTetris(){
+tet.piece.shape.forEach((row,y)=>row.forEach((v,x)=>{if(v)tet.board[tet.py+y][tet.px+x]=tet.piece.color}));
+}
+function clearLines(){
+let cleared=0;
+tet.board=tet.board.filter(row=>{if(row.every(c=>c)){cleared++;return false;}return true;});
+while(tet.board.length<20)tet.board.unshift(Array(10).fill(0));
+if(cleared){tet.lines+=cleared;tet.score+=cleared*100*tet.level;
+tet.level=Math.floor(tet.lines/10)+1;clearInterval(tet.loop);tet.loop=setInterval(tetDrop,Math.max(100,600-tet.level*50));}
+document.getElementById('score-tetris').textContent=`SCORE: ${tet.score} | LEVEL: ${tet.level} | LINES: ${tet.lines}`;
+}
+function drawTetris(dead=false){
+const c=document.getElementById('canvas-tetris'),ctx=c.getContext('2d'),s=20;
+ctx.fillStyle='#030a14';ctx.fillRect(0,0,c.width,c.height);
+ctx.strokeStyle='#0f1e35';ctx.lineWidth=0.5;
+for(let x=0;x<10;x++)for(let y=0;y<20;y++){ctx.strokeRect(x*s,y*s,s,s);}
+tet.board.forEach((row,y)=>row.forEach((v,x)=>{if(v){ctx.fillStyle=v;ctx.fillRect(x*s+1,y*s+1,s-2,s-2);}}));
+if(tet.piece&&tet.running){
+tet.piece.shape.forEach((row,y)=>row.forEach((v,x)=>{
+if(v){ctx.fillStyle=tet.piece.color;ctx.shadowBlur=8;ctx.shadowColor=tet.piece.color;
+ctx.fillRect((tet.px+x)*s+1,(tet.py+y)*s+1,s-2,s-2);ctx.shadowBlur=0;}}));}
+if(dead){ctx.fillStyle='rgba(0,0,0,0.65)';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#f87171';ctx.font='bold 14px Orbitron,sans-serif';ctx.textAlign='center';
+ctx.fillText('GAME OVER',c.width/2,c.height/2);}
+}
+function drawNextPiece(){
+const c=document.getElementById('canvas-next'),ctx=c.getContext('2d'),s=16;
+ctx.fillStyle='#0b1120';ctx.fillRect(0,0,c.width,c.height);
+if(!tet.next)return;
+const shape=tet.next.shape,offX=Math.floor((4-shape[0].length)/2)*s+2,offY=Math.floor((4-shape.length)/2)*s+2;
+shape.forEach((row,y)=>row.forEach((v,x)=>{if(v){ctx.fillStyle=tet.next.color;ctx.fillRect(offX+x*s+1,offY+y*s+1,s-2,s-2);}}));
+}
+function rotatePiece(){
+const rot=tet.piece.shape[0].map((_,i)=>tet.piece.shape.map(r=>r[i]).reverse());
+if(!collides(rot,tet.px,tet.py))tet.piece.shape=rot;
+drawTetris();
+}
+function tetrisKey(dir){
+if(!tet.running)return;
+if(dir==='left'&&!collides(tet.piece.shape,tet.px-1,tet.py))tet.px--;
+if(dir==='right'&&!collides(tet.piece.shape,tet.px+1,tet.py))tet.px++;
+if(dir==='down')tetDrop();
+if(dir==='up')rotatePiece();
+drawTetris();
+}
+function pauseTetris(){tet.paused=!tet.paused}
+document.addEventListener('keydown',e=>{
+const panel=document.getElementById('panel-tetris');
+if(!panel.classList.contains('open'))return;
+if(e.key==='ArrowLeft')tetrisKey('left');
+if(e.key==='ArrowRight')tetrisKey('right');
+if(e.key==='ArrowDown')tetrisKey('down');
+if(e.key==='ArrowUp')tetrisKey('up');
+});
+
+/* ===========================
+   MEMORY MATCH
+=========================== */
+const MEM_EMOJIS=['🍎','🎯','🔥','⚡','🎮','💎','🌙','🚀'];
+let memState={cards:[],flipped:[],matched:[],moves:0,lock:false};
+function startMem(){
+const pairs=[...MEM_EMOJIS,...MEM_EMOJIS].sort(()=>Math.random()-0.5);
+memState={cards:pairs,flipped:[],matched:[],moves:0,lock:false};
+renderMem();
+}
+function renderMem(){
+const board=document.getElementById('mem-board');board.innerHTML='';
+document.getElementById('score-mem').textContent=`MOVES: ${memState.moves} | PAIRS: ${memState.matched.length/2}/8`;
+memState.cards.forEach((emoji,i)=>{
+const card=document.createElement('div');
+const isFlipped=memState.flipped.includes(i)||memState.matched.includes(i);
+card.style.cssText=`width:100%;aspect-ratio:1;border-radius:10px;border:2px solid ${isFlipped?'#a855f7':'#1e293b'};
+background:${isFlipped?'#1e0a3c':'#0b1120'};font-size:1.5rem;display:flex;align-items:center;justify-content:center;
+cursor:pointer;transition:all 0.25s;user-select:none;`;
+card.textContent=isFlipped?emoji:'?';
+card.style.color=memState.matched.includes(i)?'#a855f7':'#e2e8f0';
+card.addEventListener('click',()=>flipMemCard(i));
+board.appendChild(card);
+});
+}
+function flipMemCard(i){
+const s=memState;
+if(s.lock||s.flipped.includes(i)||s.matched.includes(i))return;
+s.flipped.push(i);renderMem();
+if(s.flipped.length===2){
+s.moves++;s.lock=true;
+setTimeout(()=>{
+if(s.cards[s.flipped[0]]===s.cards[s.flipped[1]])s.matched.push(...s.flipped);
+s.flipped=[];s.lock=false;renderMem();
+if(s.matched.length===s.cards.length){
+document.getElementById('score-mem').textContent=`🎉 WON in ${s.moves} moves!`;
+}
+},700);
+}
+}
+
+/* ===========================
+   BREAKOUT
+=========================== */
+let bo={ball:{x:160,y:220,vx:3,vy:-3},paddle:{x:120,w:80,h:10},bricks:[],score:0,lives:3,loop:null,running:false,mouseX:160};
+function initBreakout(){startBreakout()}
+function startBreakout(){
+const c=document.getElementById('canvas-breakout');
+clearInterval(bo.loop);bo.score=0;bo.lives=3;
+bo.ball={x:160,y:220,vx:3,vy:-3};
+bo.paddle={x:120,w:80,h:10};
+bo.bricks=[];
+const cols=['#00f5ff','#7b5fff','#ff6fd8','#22c55e','#f59e0b'];
+for(let r=0;r<5;r++)for(let col=0;col<8;col++)
+bo.bricks.push({x:col*38+8,y:r*22+30,w:34,h:16,color:cols[r],alive:true});
+bo.running=true;
+c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();bo.mouseX=e.clientX-r.left;});
+bo.loop=setInterval(stepBreakout,16);
+updateBoScore();
+}
+function updateBoScore(){document.getElementById('score-breakout').textContent=`SCORE: ${bo.score} | LIVES: ${bo.lives}`}
+function stepBreakout(){
+if(!bo.running)return;
+bo.paddle.x=Math.max(0,Math.min(320-bo.paddle.w,bo.mouseX-bo.paddle.w/2));
+bo.ball.x+=bo.ball.vx;bo.ball.y+=bo.ball.vy;
+if(bo.ball.x<=5||bo.ball.x>=315)bo.ball.vx*=-1;
+if(bo.ball.y<=5)bo.ball.vy*=-1;
+if(bo.ball.y>=285){bo.lives--;updateBoScore();if(bo.lives<=0){bo.running=false;clearInterval(bo.loop);}else{bo.ball={x:160,y:220,vx:3,vy:-3};}return;}
+const py=290-bo.paddle.h;
+if(bo.ball.y>=py&&bo.ball.y<=py+bo.paddle.h&&bo.ball.x>=bo.paddle.x&&bo.ball.x<=bo.paddle.x+bo.paddle.w){
+bo.ball.vy=-Math.abs(bo.ball.vy);
+bo.ball.vx=((bo.ball.x-(bo.paddle.x+bo.paddle.w/2))/20)*4;
+}
+bo.bricks.forEach(b=>{
+if(!b.alive)return;
+if(bo.ball.x>b.x&&bo.ball.x<b.x+b.w&&bo.ball.y>b.y&&bo.ball.y<b.y+b.h){
+b.alive=false;bo.ball.vy*=-1;bo.score+=10;updateBoScore();
+}
+});
+if(bo.bricks.every(b=>!b.alive)){bo.running=false;clearInterval(bo.loop);}
+drawBreakout();
+}
+function drawBreakout(){
+const c=document.getElementById('canvas-breakout'),ctx=c.getContext('2d');
+ctx.fillStyle='#030a14';ctx.fillRect(0,0,c.width,c.height);
+bo.bricks.forEach(b=>{if(!b.alive)return;ctx.fillStyle=b.color;ctx.shadowBlur=6;ctx.shadowColor=b.color;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.shadowBlur=0;});
+const grad=ctx.createLinearGradient(bo.paddle.x,0,bo.paddle.x+bo.paddle.w,0);
+grad.addColorStop(0,'#00f5ff');grad.addColorStop(1,'#7b5fff');
+ctx.fillStyle=grad;ctx.fillRect(bo.paddle.x,290-bo.paddle.h,bo.paddle.w,bo.paddle.h);
+ctx.fillStyle='#ffffff';ctx.shadowBlur=8;ctx.shadowColor='#fff';
+ctx.beginPath();ctx.arc(bo.ball.x,bo.ball.y,6,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+if(!bo.running){ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#00f5ff';ctx.font='bold 15px Orbitron,sans-serif';ctx.textAlign='center';
+ctx.fillText(bo.bricks.every(b=>!b.alive)?'YOU WIN! 🎉':'GAME OVER',c.width/2,c.height/2);}
+}
+document.addEventListener('keydown',e=>{
+const panel=document.getElementById('panel-breakout');
+if(!panel.classList.contains('open'))return;
+if(e.key==='a'||e.key==='ArrowLeft')bo.paddle.x=Math.max(0,bo.paddle.x-18);
+if(e.key==='d'||e.key==='ArrowRight')bo.paddle.x=Math.min(320-bo.paddle.w,bo.paddle.x+18);
+});
+
+/* ===========================
+   FLAPPY BIRD
+=========================== */
+let fb={bird:{y:190,vy:0},pipes:[],score:0,best:0,running:false,started:false,loop:null};
+function initFlappy(){
+const c=document.getElementById('canvas-flappy');
+c.addEventListener('click',flappyTap);startFlappy();
+}
+function startFlappy(){
+clearInterval(fb.loop);
+fb.bird={y:190,vy:0};fb.pipes=[];fb.score=0;fb.started=false;fb.running=true;
+document.getElementById('score-flappy').textContent=`SCORE: 0 | BEST: ${fb.best}`;
+fb.loop=setInterval(stepFlappy,20);drawFlappy();
+}
+function flappyTap(){
+if(!fb.started){fb.started=true;}
+if(!fb.running){startFlappy();return;}
+fb.bird.vy=-6.5;
+}
+function stepFlappy(){
+if(!fb.running||!fb.started)return;
+fb.bird.vy+=0.4;fb.bird.y+=fb.bird.vy;
+if(fb.bird.y<0||fb.bird.y>370){endFlappy();return;}
+if(fb.pipes.length===0||fb.pipes[fb.pipes.length-1].x<160)fb.pipes.push({x:300,gap:Math.random()*120+80});
+fb.pipes.forEach(p=>p.x-=2);
+fb.pipes=fb.pipes.filter(p=>p.x>-50);
+for(const p of fb.pipes){
+if(Math.abs(p.x-60)<18&&(fb.bird.y<p.gap||fb.bird.y>p.gap+85)){endFlappy();return;}
+if(p.x===58){fb.score++;if(fb.score>fb.best)fb.best=fb.score;
+document.getElementById('score-flappy').textContent=`SCORE: ${fb.score} | BEST: ${fb.best}`;}
+}
+drawFlappy();
+}
+function endFlappy(){fb.running=false;clearInterval(fb.loop);drawFlappy(true);}
+function drawFlappy(dead=false){
+const c=document.getElementById('canvas-flappy'),ctx=c.getContext('2d');
+const sky=ctx.createLinearGradient(0,0,0,c.height);sky.addColorStop(0,'#1e3a5f');sky.addColorStop(1,'#87ceeb');
+ctx.fillStyle=sky;ctx.fillRect(0,0,c.width,c.height);
+fb.pipes.forEach(p=>{
+ctx.fillStyle='#22c55e';
+ctx.fillRect(p.x-15,0,30,p.gap);
+ctx.fillRect(p.x-15,p.gap+85,30,c.height);
+ctx.fillStyle='#16a34a';
+ctx.fillRect(p.x-20,p.gap-12,40,12);
+ctx.fillRect(p.x-20,p.gap+85,40,12);
+});
+ctx.fillStyle='#f59e0b';ctx.shadowBlur=10;ctx.shadowColor='#fbbf24';
+ctx.beginPath();ctx.arc(60,fb.bird.y,12,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(66,fb.bird.y-3,4,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#1e293b';ctx.beginPath();ctx.arc(67,fb.bird.y-3,2,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#f97316';ctx.beginPath();ctx.moveTo(72,fb.bird.y+2);ctx.lineTo(80,fb.bird.y);ctx.lineTo(72,fb.bird.y-2);ctx.closePath();ctx.fill();
+ctx.fillStyle='#92400e';ctx.fillRect(0,c.height-20,c.width,20);
+if(!fb.started&&fb.running){ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#fff';ctx.font='bold 14px Orbitron,sans-serif';ctx.textAlign='center';
+ctx.fillText('TAP TO START',c.width/2,c.height/2);}
+if(dead){ctx.fillStyle='rgba(0,0,0,0.55)';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#f87171';ctx.font='bold 15px Orbitron,sans-serif';ctx.textAlign='center';
+ctx.fillText('GAME OVER',c.width/2,c.height/2-10);ctx.fillStyle='#94a3b8';
+ctx.font='11px Orbitron,sans-serif';ctx.fillText('Tap to restart',c.width/2,c.height/2+14);}
+}
+
+/* ===========================
+   WHACK-A-MOLE
+=========================== */
+let mole={scores:0,time:30,loop:null,holes:Array(9).fill(false),timeLoop:null};
+function initMole(){renderMoleBoard()}
+function renderMoleBoard(){
+const board=document.getElementById('mole-board');board.innerHTML='';
+for(let i=0;i<9;i++){
+const hole=document.createElement('div');
+hole.style.cssText=`aspect-ratio:1;background:#1e0a3c;border-radius:50%;border:3px solid #6d28d9;display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;transition:all 0.1s;user-select:none;`;
+hole.textContent='🌑';hole.id='hole-'+i;
+hole.addEventListener('click',()=>whackMole(i));
+board.appendChild(hole);
+}
+}
+function startMole(){
+clearInterval(mole.loop);clearInterval(mole.timeLoop);
+mole.scores=0;mole.time=30;mole.holes=Array(9).fill(false);
+renderMoleBoard();
+mole.timeLoop=setInterval(()=>{
+mole.time--;document.getElementById('score-mole').textContent=`SCORE: ${mole.scores} | TIME: ${mole.time}`;
+if(mole.time<=0){clearInterval(mole.loop);clearInterval(mole.timeLoop);
+document.getElementById('score-mole').textContent=`FINAL SCORE: ${mole.scores} 🎉`;}
+},1000);
+let speed=800;
+mole.loop=setInterval(()=>{
+if(mole.time<=0)return;
+mole.holes=mole.holes.map(()=>false);
+const n=Math.floor(Math.random()*(mole.time<15?3:2))+1;
+const positions=[...Array(9).keys()].sort(()=>Math.random()-0.5).slice(0,n);
+positions.forEach(p=>{mole.holes[p]=true;});
+for(let i=0;i<9;i++){
+const el=document.getElementById('hole-'+i);
+if(!el)continue;
+el.textContent=mole.holes[i]?'🐹':'🌑';
+el.style.background=mole.holes[i]?'#2d1a55':'#1e0a3c';
+el.style.borderColor=mole.holes[i]?'#a855f7':'#6d28d9';
+}
+speed=Math.max(400,800-mole.scores*5);
+},speed);
+}
+function whackMole(i){
+if(!mole.holes[i])return;
+mole.holes[i]=false;mole.scores+=10;
+const el=document.getElementById('hole-'+i);
+if(el){el.textContent='💫';el.style.background='#3d1060';setTimeout(()=>{if(el){el.textContent='🌑';el.style.background='#1e0a3c';}},200);}
+document.getElementById('score-mole').textContent=`SCORE: ${mole.scores} | TIME: ${mole.time}`;
+}
+
+/* ===========================
+   TYPING SPEED
+=========================== */
+const SENTENCES=[
+'The quick brown fox jumps over the lazy dog',
+'Pack my box with five dozen liquor jugs',
+'How vexingly quick daft zebras jump',
+'The five boxing wizards jump quickly',
+'Sphinx of black quartz judge my vow',
+'Bright vixens jump dozy fowl quack',
+'Waltz nymph for quick jigs vex bud',
+'Glib jocks quiz nymph to vex dwarf',
+];
+let typingState={sentence:'',startTime:null,done:false};
+function startTyping(){
+const s=SENTENCES[Math.floor(Math.random()*SENTENCES.length)];
+typingState={sentence:s,startTime:null,done:false};
+const inp=document.getElementById('typing-input');inp.value='';inp.disabled=false;inp.focus();
+renderTypingText('');
+document.getElementById('score-typing').textContent='WPM: — | ACCURACY: —%';
+}
+function renderTypingText(typed){
+const text=typingState.sentence,el=document.getElementById('typing-text');
+el.innerHTML=text.split('').map((ch,i)=>{
+if(i<typed.length)return`<span style="color:${typed[i]===ch?'#4ade80':'#f87171'};background:${typed[i]===ch?'rgba(74,222,128,0.1)':'rgba(248,113,113,0.1)'}">${ch}</span>`;
+if(i===typed.length)return`<span style="background:rgba(0,245,255,0.3);color:#e2e8f0">${ch}</span>`;
+return`<span style="color:#475569">${ch}</span>`;
+}).join('');
+}
+function checkTyping(){
+const inp=document.getElementById('typing-input'),typed=inp.value,s=typingState;
+if(!s.startTime&&typed.length>0)s.startTime=Date.now();
+renderTypingText(typed);
+if(typed.length>=s.sentence.length){
+s.done=true;inp.disabled=true;
+const elapsed=(Date.now()-s.startTime)/60000;
+const wpm=Math.round(s.sentence.split(' ').length/elapsed);
+const correct=typed.split('').filter((c,i)=>c===s.sentence[i]).length;
+const acc=Math.round((correct/s.sentence.length)*100);
+document.getElementById('score-typing').textContent=`WPM: ${wpm} | ACCURACY: ${acc}%`;
+}
+}
+
+/* ===========================
+   COLOR GUESS
+=========================== */
+let colorState={round:0,score:0,streak:0,target:null,choices:[]};
+function startColor(){
+colorState={round:0,score:0,streak:0,target:null,choices:[]};nextColor();
+}
+function rndColor(){return'#'+[0,0,0].map(()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join('')}
+function nextColor(){
+if(colorState.round>=10){
+document.getElementById('color-hex').textContent='DONE!';
+document.getElementById('score-color').textContent=`FINAL: ${colorState.score}/10 🎉`;
+document.getElementById('color-choices').innerHTML='';return;
+}
+colorState.round++;colorState.target=rndColor();
+colorState.choices=[colorState.target,rndColor(),rndColor()].sort(()=>Math.random()-0.5);
+document.getElementById('color-hex').textContent=colorState.target.toUpperCase();
+const el=document.getElementById('color-choices');el.innerHTML='';
+colorState.choices.forEach(c=>{
+const btn=document.createElement('button');
+btn.style.cssText=`width:64px;height:64px;border-radius:12px;background:${c};border:3px solid transparent;cursor:pointer;transition:all 0.2s;`;
+btn.addEventListener('click',()=>guessColor(c,btn));
+el.appendChild(btn);
+});
+}
+function guessColor(picked,btn){
+const correct=picked===colorState.target;
+btn.style.borderColor=correct?'#22c55e':'#ef4444';
+if(correct){colorState.score++;colorState.streak++;}else{colorState.streak=0;}
+document.getElementById('score-color').textContent=`SCORE: ${colorState.score}/${colorState.round} | STREAK: ${colorState.streak}`;
+document.getElementById('color-choices').querySelectorAll('button').forEach(b=>b.style.pointerEvents='none');
+setTimeout(nextColor,900);
+}
+
+/* ===========================
+   MATH BLITZ
+=========================== */
+let mathState={score:0,time:60,loop:null,answer:0,running:false};
+function initMath(){}
+function startMath(){
+clearInterval(mathState.loop);
+mathState={score:0,time:60,answer:0,running:true};
+const inp=document.getElementById('math-input');inp.value='';inp.focus();
+nextMath();
+mathState.loop=setInterval(()=>{
+mathState.time--;document.getElementById('score-math').textContent=`SCORE: ${mathState.score} | TIME: ${mathState.time}`;
+if(mathState.time<=0){clearInterval(mathState.loop);mathState.running=false;
+document.getElementById('math-question').textContent=`DONE! Score: ${mathState.score}`;
+document.getElementById('score-math').textContent=`FINAL SCORE: ${mathState.score} 🎉`;}
+},1000);
+}
+function nextMath(){
+if(!mathState.running)return;
+const ops=['+','-','×','÷'];const op=ops[Math.floor(Math.random()*(mathState.score>5?4:2))];
+let a=Math.floor(Math.random()*12)+1,b=Math.floor(Math.random()*12)+1,ans;
+if(op==='÷'){b=Math.floor(Math.random()*9)+1;a=b*(Math.floor(Math.random()*9)+1);}
+if(op==='+')ans=a+b;else if(op==='-')ans=a-b;else if(op==='×')ans=a*b;else ans=a/b;
+mathState.answer=ans;
+document.getElementById('math-question').textContent=`${a} ${op} ${b} = ?`;
+document.getElementById('math-input').value='';
+}
+function checkMath(){
+if(!mathState.running)return;
+const val=parseFloat(document.getElementById('math-input').value);
+if(val===mathState.answer){mathState.score++;
+document.getElementById('score-math').textContent=`SCORE: ${mathState.score} | TIME: ${mathState.time}`;
+}
+nextMath();
+}
+
+/* ===========================
+   ROCK PAPER SCISSORS
+=========================== */
+let rps={you:0,cpu:0,round:1};
+const rpsEmoji={rock:'✊',paper:'🖐',scissors:'✌️'};
+const rpsNames=['rock','paper','scissors'];
+function startRock(){rps={you:0,cpu:0,round:1};updateRpsScore('');document.getElementById('rock-display').textContent='✊ vs ❓';}
+function playRock(choice){
+if(rps.round>5)return;
+const cpu=rpsNames[Math.floor(Math.random()*3)];
+let result='DRAW';
+if((choice==='rock'&&cpu==='scissors')||(choice==='paper'&&cpu==='rock')||(choice==='scissors'&&cpu==='paper')){result='YOU WIN!';rps.you++;}
+else if(choice!==cpu){result='CPU WINS';rps.cpu++;}
+document.getElementById('rock-display').textContent=`${rpsEmoji[choice]} vs ${rpsEmoji[cpu]}`;
+const col=result==='YOU WIN!'?'#22c55e':result==='CPU WINS'?'#ef4444':'#f59e0b';
+document.getElementById('rock-result').style.color=col;
+if(rps.round<5){document.getElementById('rock-result').textContent=result;rps.round++;}
+else{document.getElementById('rock-result').textContent=rps.you>rps.cpu?'🏆 YOU WIN THE MATCH!':rps.you<rps.cpu?'😅 CPU WINS THE MATCH':'🤝 MATCH DRAW';}
+updateRpsScore(result);
+}
+function updateRpsScore(r){document.getElementById('score-rock').textContent=`YOU: ${rps.you} | CPU: ${rps.cpu} | ROUND ${Math.min(rps.round,5)}/5`;}
+
+/* ===========================
+   2048
+=========================== */
+let g2={board:null,score:0,best:0};
+const C2={0:'#0b1120',2:'#1e3a5f',4:'#1e4a7a',8:'#1e6a9e',16:'#1d7abf',32:'#1a8fd1',64:'#1aa0e0',128:'#17b1ee',256:'#13c2f0',512:'#0fd1ef',1024:'#0ddded',2048:'#00f5ff'};
+const T2={0:'transparent',2:'#7dd3fc',4:'#93c5fd',8:'#bae6fd',16:'#e0f2fe',32:'#f0f9ff',64:'#fff',128:'#fff',256:'#fff',512:'#fff',1024:'#fff',2048:'#000'};
+function init2048(){start2048()}
+function start2048(){
+g2.board=Array.from({length:4},()=>Array(4).fill(0));
+g2.score=0;addTile2048();addTile2048();draw2048();
+}
+function addTile2048(){
+const empty=[];g2.board.forEach((r,y)=>r.forEach((v,x)=>{if(!v)empty.push({x,y})}));
+if(!empty.length)return;
+const pos=empty[Math.floor(Math.random()*empty.length)];
+g2.board[pos.y][pos.x]=Math.random()<0.9?2:4;
+}
+function draw2048(){
+const c=document.getElementById('canvas-2048'),ctx=c.getContext('2d'),s=64,gap=6;
+ctx.fillStyle='#0b1120';ctx.fillRect(0,0,c.width,c.height);
+for(let y=0;y<4;y++)for(let x=0;x<4;x++){
+const v=g2.board[y][x],px=x*(s+gap)+gap,py=y*(s+gap)+gap;
+ctx.fillStyle=C2[Math.min(v,2048)]||'#00f5ff';
+ctx.beginPath();ctx.roundRect(px,py,s,s,8);ctx.fill();
+if(v){ctx.fillStyle=T2[Math.min(v,2048)]||'#000';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.font=`bold ${v>99?v>999?14:18:22}px Orbitron,sans-serif`;ctx.fillText(v,px+s/2,py+s/2);}
+}
+document.getElementById('score-2048').textContent=`SCORE: ${g2.score} | BEST: ${g2.best}`;
+}
+function move2048(dir){
+let moved=false;const b=g2.board;
+function slide(row){
+let arr=row.filter(v=>v),merged=false;
+for(let i=0;i<arr.length-1;i++){if(arr[i]===arr[i+1]&&!merged){arr[i]*=2;g2.score+=arr[i];arr.splice(i+1,1);merged=true;i--;}}
+while(arr.length<4)arr.push(0);return arr;
+}
+if(dir==='left'){for(let r=0;r<4;r++){const n=slide(b[r]);if(n.join()!==b[r].join()){b[r]=n;moved=true;}}}
+if(dir==='right'){for(let r=0;r<4;r++){const n=slide([...b[r]].reverse()).reverse();if(n.join()!==b[r].join()){b[r]=n;moved=true;}}}
+if(dir==='up'||dir==='down'){
+for(let x=0;x<4;x++){
+let col=b.map(r=>r[x]);if(dir==='down')col.reverse();
+const nc=slide(col);if(dir==='down')nc.reverse();
+nc.forEach((v,y)=>{if(b[y][x]!==v){b[y][x]=v;moved=true;}});
+}
+}
+if(moved){if(g2.score>g2.best)g2.best=g2.score;addTile2048();draw2048();}
+}
+document.addEventListener('keydown',e=>{
+const panel=document.getElementById('panel-2048');
+if(!panel.classList.contains('open'))return;
+const map={'ArrowLeft':'left','ArrowRight':'right','ArrowUp':'up','ArrowDown':'down'};
+if(map[e.key]){e.preventDefault();move2048(map[e.key]);}
+});
+
+/* ===========================
+   MAZE RUNNER
+=========================== */
+let mazeState={grid:null,player:{x:0,y:0},size:10,time:0,best:null,timerLoop:null,won:false};
+const CELL=28;
+function startMaze(){
+clearInterval(mazeState.timerLoop);
+const sz=10;mazeState.size=sz;mazeState.player={x:0,y:0};mazeState.time=0;mazeState.won=false;
+mazeState.grid=generateMaze(sz);
+mazeState.timerLoop=setInterval(()=>{
+if(!mazeState.won){mazeState.time++;
+document.getElementById('score-maze').textContent=`TIME: ${mazeState.time}s | BEST: ${mazeState.best?mazeState.best+'s':'—'}`;}
+},1000);
+drawMaze();
+}
+function generateMaze(sz){
+const grid=Array.from({length:sz},()=>Array.from({length:sz},()=>({n:true,s:true,e:true,w:true,visited:false})));
+function dfs(x,y){
+grid[y][x].visited=true;
+const dirs=[['n',0,-1],['s',0,1],['e',1,0],['w',-1,0]].sort(()=>Math.random()-0.5);
+dirs.forEach(([d,dx,dy])=>{
+const nx=x+dx,ny=y+dy;
+if(nx>=0&&ny>=0&&nx<sz&&ny<sz&&!grid[ny][nx].visited){
+const opp={n:'s',s:'n',e:'w',w:'e'};
+grid[y][x][d]=false;grid[ny][nx][opp[d]]=false;dfs(nx,ny);
+}
+});
+}
+dfs(0,0);return grid;
+}
+function drawMaze(){
+const c=document.getElementById('canvas-maze'),ctx=c.getContext('2d'),sz=mazeState.size,s=CELL;
+ctx.fillStyle='#030a14';ctx.fillRect(0,0,c.width,c.height);
+ctx.strokeStyle='#00f5ff';ctx.lineWidth=2;
+for(let y=0;y<sz;y++)for(let x=0;x<sz;x++){
+const cell=mazeState.grid[y][x],px=x*s+1,py=y*s+1;
+if(cell.n){ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+s,py);ctx.stroke();}
+if(cell.s){ctx.beginPath();ctx.moveTo(px,py+s);ctx.lineTo(px+s,py+s);ctx.stroke();}
+if(cell.w){ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py+s);ctx.stroke();}
+if(cell.e){ctx.beginPath();ctx.moveTo(px+s,py);ctx.lineTo(px+s,py+s);ctx.stroke();}
+}
+ctx.fillStyle='rgba(34,197,94,0.25)';ctx.fillRect((sz-1)*s+3,(sz-1)*s+3,s-6,s-6);
+ctx.fillStyle='#22c55e';ctx.font='16px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ctx.fillText('🏁',(sz-0.5)*s,(sz-0.5)*s);
+const {x,y}=mazeState.player;
+ctx.fillStyle='#7b5fff';ctx.shadowBlur=12;ctx.shadowColor='#7b5fff';
+ctx.beginPath();ctx.arc(x*s+s/2+1,y*s+s/2+1,s*0.3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+if(mazeState.won){ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle='#22c55e';ctx.font='bold 15px Orbitron,sans-serif';ctx.textAlign='center';
+ctx.fillText('🎉 YOU WIN!',c.width/2,c.height/2-10);
+ctx.fillStyle='#94a3b8';ctx.font='11px Orbitron,sans-serif';
+ctx.fillText(`Time: ${mazeState.time}s`,c.width/2,c.height/2+12);}
+}
+function moveMaze(dx,dy){
+if(mazeState.won)return;
+const {x,y}=mazeState.player,sz=mazeState.size,cell=mazeState.grid[y][x];
+if(dx===1&&!cell.e&&x+1<sz)mazeState.player.x++;
+if(dx===-1&&!cell.w&&x-1>=0)mazeState.player.x--;
+if(dy===1&&!cell.s&&y+1<sz)mazeState.player.y++;
+if(dy===-1&&!cell.n&&y-1>=0)mazeState.player.y--;
+if(mazeState.player.x===sz-1&&mazeState.player.y===sz-1){
+mazeState.won=true;clearInterval(mazeState.timerLoop);
+if(!mazeState.best||mazeState.time<mazeState.best)mazeState.best=mazeState.time;
+document.getElementById('score-maze').textContent=`TIME: ${mazeState.time}s | BEST: ${mazeState.best}s`;
+}
+drawMaze();
+}
+document.addEventListener('keydown',e=>{
+const panel=document.getElementById('panel-maze');
+if(!panel.classList.contains('open'))return;
+const m={'ArrowLeft':[-1,0],'ArrowRight':[1,0],'ArrowUp':[0,-1],'ArrowDown':[0,1]};
+if(m[e.key]){e.preventDefault();moveMaze(...m[e.key]);}
+});
+
+/* Touch swipe for 2048 and maze */
+let touchStart={x:0,y:0};
+document.addEventListener('touchstart',e=>{touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+document.addEventListener('touchend',e=>{
+const dx=e.changedTouches[0].clientX-touchStart.x,dy=e.changedTouches[0].clientY-touchStart.y;
+if(Math.max(Math.abs(dx),Math.abs(dy))<30)return;
+const horiz=Math.abs(dx)>Math.abs(dy);
+if(document.getElementById('panel-2048').classList.contains('open')){
+if(horiz)move2048(dx>0?'right':'left');else move2048(dy>0?'down':'up');
+}
+if(document.getElementById('panel-maze').classList.contains('open')){
+if(horiz)moveMaze(dx>0?1:-1,0);else moveMaze(0,dy>0?1:-1);
+}
+},{passive:true});
+</script>
+</body>
+</html>
